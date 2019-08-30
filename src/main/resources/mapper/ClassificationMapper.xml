@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lingtang.pulanfang.supplier.mapper.ClassificationMapper">
+  <resultMap id="BaseResultMap" type="com.lingtang.pulanfang.supplier.model.Classification">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="classification_name" jdbcType="VARCHAR" property="classificationName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, classification_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from classification
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from classification
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lingtang.pulanfang.supplier.model.Classification">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into classification (classification_name)
+    values (#{classificationName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lingtang.pulanfang.supplier.model.Classification">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into classification
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="classificationName != null">
+        classification_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="classificationName != null">
+        #{classificationName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lingtang.pulanfang.supplier.model.Classification">
+    update classification
+    <set>
+      <if test="classificationName != null">
+        classification_name = #{classificationName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lingtang.pulanfang.supplier.model.Classification">
+    update classification
+    set classification_name = #{classificationName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

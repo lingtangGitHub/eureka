@@ -1,0 +1,45 @@
+server:
+  port: 8080
+  #servlet:
+  # context-path: /fieldExperience
+eureka:
+  client:
+    #registerWithEureka: true
+    #fetchRegistry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
+  instance:
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
+spring:
+  servlet:
+    multipart:
+      maxFileSize: -1
+      maxRequestSize: -1
+  application:
+    name: supplier
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/plf?allowMultiQueries=true&serverTimezone=GMT%2B8
+    username: root
+    password:
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.lingtang.pulanfang.suppliepr.model
+  call-setters-on-nulls: true
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+  eureka:
+    enabled: true
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: false

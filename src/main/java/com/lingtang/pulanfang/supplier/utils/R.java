@@ -1,0 +1,90 @@
+/*
+ *
+ *      Copyright (c) 2018-2025, lengleng All rights reserved.
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice,
+ *  this list of conditions and the following disclaimer.
+ *  Redistributions in binary form must reproduce the above copyright
+ *  notice, this list of conditions and the following disclaimer in the
+ *  documentation and/or other materials provided with the distribution.
+ *  Neither the name of the pig4cloud.com developer nor the names of its
+ *  contributors may be used to endorse or promote products derived from
+ *  this software without specific prior written permission.
+ *  Author: lengleng (wangiegie@gmail.com)
+ *
+ */
+
+package com.lingtang.pulanfang.supplier.utils;
+
+import com.alibaba.fastjson.JSONObject;
+import lombok.*;
+import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+
+/**
+ * 响应信息主体
+ *
+ * @param <T>
+ * @author lengleng
+ */
+@Builder
+@ToString
+@Accessors(chain = true)
+@AllArgsConstructor
+public class R<T> implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Getter
+	@Setter
+	private int code = CommonConstant.SUCCESS;
+
+	@Getter
+	@Setter
+	private String msg = "success";
+
+
+	@Getter
+	@Setter
+	private T data;
+
+	public R() {
+		super();
+	}
+
+	public R(T data) {
+		super();
+		if(data == null){
+			data = (T) new JSONObject();
+		}
+		this.data = data;
+	}
+
+	public R(Integer code,String msg,T data) {
+		super();
+		this.code = code;
+		this.data = data;
+		this.msg = msg;
+	}
+
+	public R(Throwable e) {
+		super();
+		this.msg = e.getMessage();
+		this.code = CommonConstant.FAIL;
+	}
+
+	public void setCode(int code) {
+		this.code = code;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
+	public void setData(T data) {
+		this.data = data;
+	}
+}
